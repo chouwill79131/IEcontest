@@ -368,17 +368,28 @@ public class BluetoothChat extends Activity {
 //					n++;
 //					toJS += value+",";
 //				}
-				System.out.println(readMessage);
-				toJS += readMessage+",";
-				n++;
-				
+//				if(n==0){
+//					try {
+//						Thread.sleep(1000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+				String value = "";
+				Pattern MacPat = Pattern.compile("\r\n(\\d{1,4})"); 
+				Matcher matcher = MacPat.matcher(readMessage);
+				while (matcher.find()) {
+					value = (matcher.group(1));
+					n++;
+					toJS += value+",";
+				}
 				if (n % 100 == 0 ) {
-					count++;
-					
-					toJS += readMessage + "]";
+					n++;
+					toJS += value + "]";
 					callJavaScriptFunctionAndGetResultBack(toJS);
-//					System.out.println(toJS);
+					System.out.println(toJS);
 					toJS = "[";
+					
 				}
 				
 				// *****

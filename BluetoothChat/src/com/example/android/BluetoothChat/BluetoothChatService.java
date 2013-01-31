@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -445,16 +447,27 @@ public class BluetoothChatService {
 
         public void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[4];
+            byte[] buffer = new byte[1024];
             int bytes;
             // Keep listening to the InputStream while connected
             while (true) {
                 try {
                 	// Read from the InputStream
                     bytes = mmInStream.read(buffer);
-//                    String s="";
-//                    s+=new String(buffer,0,4);
-//                    System.out.println(bytes+" : "+s);
+                    
+//                    if(bytes<6){
+//                    	return;
+//                    }
+                    String s = "";
+                    s+=new String(buffer);
+//                    System.out.println(bytes+" : ");
+//                    try {
+//						Thread.sleep(1000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//                    Pattern MacPat = Pattern.compile("(\\d{1,4})\n"); 
+//    				Matcher matcher = MacPat.matcher(s);
 //                    finish();
                     
 //                    System.out.println(bytes.length());

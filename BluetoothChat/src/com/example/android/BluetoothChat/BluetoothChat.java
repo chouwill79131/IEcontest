@@ -353,54 +353,31 @@ public class BluetoothChat extends Activity {
 				break;
 			case MESSAGE_READ:
 				byte[] readBuf = (byte[]) msg.obj;
-//				double k = readBuf.length;
-//				readMessage = new String(readBuf, 0, msg.arg1);
-//				System.out.println(readMessage.length());
-//				System.out.println(readMessage);
-//				
-//				int len=String.valueOf(readMessage).length();
-//                System.out.println(len); if(len>6){finish();}
-//                if(len == 4){
-//                	System.out.println(readMessage);
-//                	readMessage = null;
-//                }
-//				System.out.println(readMessage);
-				
-//				finish();
-//				System.out.println(readMessage);
-				
-//				
-//				++i;
-//				n += readBuf.length;
-//				if ( 0 == i % 1000 ) {
-//					System.out.println(n);
-//				}
-
-//				row++;
-//				System.out.println(row + "row");
-
-				// construct a string from the valid bytes in the buffer
 				readMessage = new String(readBuf, 0, msg.arg1);
-				Pattern MacPat = Pattern.compile("\n?\\s?(\\d{1,4})\\s?\n?"); 
-				Matcher matcher = MacPat.matcher(readMessage);
-				String value = "";
-				while (matcher.find()) {
-					value = (matcher.group(1));
-					int intValue = Integer.parseInt(value);
-					if(i<5 || intValue > 4096 || intValue < 1000){
-						i++;
-						return;
-					}
-					n++;
-					toJS += value+",";
-				}
-//				System.out.println(n);
+				
+//				Pattern MacPat = Pattern.compile("\n?\\s?(\\d{1,4})\\s?\n?"); 
+//				Matcher matcher = MacPat.matcher(readMessage);
+//				String value = "";
+//				while (matcher.find()) {
+//					value = (matcher.group(1));
+//					int intValue = Integer.parseInt(value);
+//					if(i<5 || intValue > 4096 || intValue < 1000){
+//						i++;
+//						return;
+//					}
+//					n++;
+//					toJS += value+",";
+//				}
+				System.out.println(readMessage);
+				toJS += readMessage+",";
+				n++;
+				
 				if (n % 100 == 0 ) {
 					count++;
 					
-					toJS += value + "]";
+					toJS += readMessage + "]";
 					callJavaScriptFunctionAndGetResultBack(toJS);
-					System.out.println(toJS);
+//					System.out.println(toJS);
 					toJS = "[";
 				}
 				

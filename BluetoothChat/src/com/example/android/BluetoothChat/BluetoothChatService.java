@@ -23,11 +23,14 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,6 +43,8 @@ import android.util.Log;
  * thread for performing data transmissions when connected. 
  */
 public class BluetoothChatService {
+	String toJS = "[";
+	int n=0, i=0;
     // Debugging
     private static final String TAG = "BluetoothChatService";
     private static final boolean D = true;
@@ -180,7 +185,6 @@ public class BluetoothChatService {
         bundle.putString(BluetoothChat.DEVICE_NAME, device.getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
-
         setState(STATE_CONNECTED);
     }
 
@@ -446,34 +450,39 @@ public class BluetoothChatService {
         }
 
         public void run() {
+        	
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[10240];
             int bytes;
             // Keep listening to the InputStream while connected
             while (true) {
                 try {
-                	// Read from the InputStream
+                	
                     bytes = mmInStream.read(buffer);
-                    
-//                    if(bytes<6){
-//                    	return;
-//                    }
                     String s = "";
-                    s+=new String(buffer);
-//                    System.out.println(bytes+" : ");
-//                    try {
-//						Thread.sleep(1000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//                    Pattern MacPat = Pattern.compile("(\\d{1,4})\n"); 
-//    				Matcher matcher = MacPat.matcher(s);
-//                    finish();
+                    s+=new String(buffer,0, 1024);
+//                    System.out.println(s);
                     
-//                    System.out.println(bytes.length());
-//                    int len=String.valueOf(bytes).length();
-//                    System.out.println(bytes);
-                    // Send the obtained bytes to the UI Activity
+                    String value = "";
+    				Pattern MacPat = Pattern.compile("(\\d{1,4})"); 
+    				Matcher matcher = MacPat.matcher(s);
+    				while (matcher.find()) {
+    					value = (matcher.group(1));
+    					n++;
+    					toJS += value+",";
+    				}
+    				if (n % 100 == 0 ) {
+    					toJS += value + "]";
+    					System.out.println(toJS);
+    					Intent intent = new Intent();
+    					Bundle bundle = new Bundle();
+    					bundle.putString("toJS", toJS );
+    					intent.putExtras(bundle);
+    					toJS = "[";
+    					n++;
+    				}
+                    
+                    
                     mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget();
                 } catch (IOException e) {

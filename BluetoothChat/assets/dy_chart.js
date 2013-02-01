@@ -8,8 +8,12 @@ function addSomething(a) {
 		chart.series[0].addPoint([xstart,a[i]],false,true);
 		xstart += step;
 	}
-//	chart.series[0].addPoint([xstart,a],false,true);
-//	xstart += step;
+	
+	/**
+	chart.series[0].addPoint([xstart,a],false,true);
+	xstart += step;
+	**/
+	
 	chart.redraw();
 //	}, 1000);									// for testing feq
 }

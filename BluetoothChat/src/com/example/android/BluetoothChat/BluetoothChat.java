@@ -63,7 +63,7 @@ public class BluetoothChat extends Activity {
 	public int i = 0; // 取樣計數
 	public int row = 0;
 	public int fine = 0;
-	String readMessage = " ";
+	String readMessage = "";
 	public static int var = 125;
 	String toJS = "[";
 	String test50 = "[0.21,0.182,0.206,0.182,0.198,0.182,0.202,0.178,0.202,0.186,0.21,0.206,0.274,0.266,0.322,0.282,0.318,0.262,0.282,0.226,0.246,0.198,0.214,0.182,0.226,0.19,0.222,0.202,0.234,0.21,0.246,0.21,0.238,0.202,0.218,0.194,0.214,0.17,0.206,0.182,0.202,0.182,0.198,0.174,0.206,0.162,0.202,0.206,0.286,0.278,0.278]";
@@ -125,6 +125,7 @@ public class BluetoothChat extends Activity {
 			return;
 		}
 		// ***************
+		
 		myResult = (TextView) this.findViewById(R.id.myResult);
 		myWebView = (WebView) this.findViewById(R.id.webView1);
 		myWebView.getSettings().setJavaScriptEnabled(true);
@@ -166,7 +167,7 @@ public class BluetoothChat extends Activity {
 				// Toast.LENGTH_SHORT).show();
 			}
 		});
-
+		
 	}
 
 	// *******************
@@ -323,6 +324,7 @@ public class BluetoothChat extends Activity {
 
 	// The Handler that gets information back from the BluetoothChatService
 	private final Handler mHandler = new Handler() {
+		
 		@Override
 		public void handleMessage(Message msg) {
 
@@ -351,30 +353,13 @@ public class BluetoothChat extends Activity {
 				String writeMessage = new String(writeBuf);
 				mConversationArrayAdapter.add("Me:  " + writeMessage);
 				break;
-			case MESSAGE_READ:
-				byte[] readBuf = (byte[]) msg.obj;
-				readMessage = new String(readBuf, 0, msg.arg1);
 				
-//				Pattern MacPat = Pattern.compile("\n?\\s?(\\d{1,4})\\s?\n?"); 
-//				Matcher matcher = MacPat.matcher(readMessage);
-//				String value = "";
-//				while (matcher.find()) {
-//					value = (matcher.group(1));
-//					int intValue = Integer.parseInt(value);
-//					if(i<5 || intValue > 4096 || intValue < 1000){
-//						i++;
-//						return;
-//					}
-//					n++;
-//					toJS += value+",";
-//				}
-//				if(n==0){
-//					try {
-//						Thread.sleep(1000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				}
+				
+			case MESSAGE_READ:
+				
+				byte[] readBuf = (byte[]) msg.obj;
+				
+				readMessage = new String(readBuf, 0, msg.arg1);
 				String value = "";
 				Pattern MacPat = Pattern.compile("\r\n(\\d{1,4})"); 
 				Matcher matcher = MacPat.matcher(readMessage);
@@ -384,9 +369,8 @@ public class BluetoothChat extends Activity {
 					toJS += value+",";
 				}
 				if (n % 100 == 0 ) {
-					n++;
 					toJS += value + "]";
-					callJavaScriptFunctionAndGetResultBack(toJS);
+//					callJavaScriptFunctionAndGetResultBack(toJS);
 					System.out.println(toJS);
 					toJS = "[";
 					

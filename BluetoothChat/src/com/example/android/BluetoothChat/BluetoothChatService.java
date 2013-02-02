@@ -437,6 +437,7 @@ public class BluetoothChatService {
             OutputStream tmpOut = null;
 
             // Get the BluetoothSocket input and output streams
+            
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
@@ -452,7 +453,7 @@ public class BluetoothChatService {
         public void run() {
         	//n,i usable
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[10240];
+            byte[] buffer = new byte[1024];
             int bytes;
             int i =0;
             // Keep listening to the InputStream while connected
@@ -460,12 +461,20 @@ public class BluetoothChatService {
             	
                 try {
                     bytes = mmInStream.read(buffer);
+                    String msg = "";
+                    byte ch;
                     
-//                    System.out.println(bytes);
+                    //*****
+                    while((ch=(byte) mmInStream.read())!='\n') {
+                        bytes++;
+                        msg+=ch;
+                    }
+                    //*****
+                    
                     String s = "";
                     s+=new String(buffer,0, bytes);
-                    System.out.println(s+"  :   "+bytes);
-//    				System.out.println(n+"        n         ");
+//                    System.out.println(s+" :s"+bytes+" :bytes");
+                    
                     mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget();
                 } catch (IOException e) {

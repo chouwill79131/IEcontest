@@ -133,36 +133,16 @@ public class BluetoothChat extends Activity {
 		myWebView.addJavascriptInterface(new JavaScriptHandler(this),
 				"MyHandler");
 
+		
 		Button btnSet = (Button) this.findViewById(R.id.btnCalc);
 		btnSet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				callJavaScriptFunctionAndGetResultBack(test125);
-				if(true){return;}
-				
-				Pattern MacPat = Pattern.compile("\n?\\s?(\\d{1,4})\\s?\n?"); // �إ�pattern
-				Matcher matcher = MacPat.matcher(test50);
-				String value = "";
-				while (matcher.find()) {
-					value = (matcher.group(1));
-					callJavaScriptFunctionAndGetResultBack(value);
-				}
-				if (i == 5) {		//取樣
-					toJS += value + ", ";
-					n++;
-					System.out.println(n);
-					i = 0;
-				}
-				if (n == 5) {		//一次JS畫幾個點
-					toJS += value + "]";
-					System.out.println(toJS);
-					callJavaScriptFunctionAndGetResultBack(toJS);
-					toJS = "[";
-					n = 0;
-				}
-				// if(true){
-				// return;
-				// }
+				System.out.println("1");
+					
+					
+									
 				// Toast.makeText(BluetoothChat.this, readMessage,
 				// Toast.LENGTH_SHORT).show();
 			}
@@ -358,26 +338,24 @@ public class BluetoothChat extends Activity {
 			case MESSAGE_READ:
 				
 				byte[] readBuf = (byte[]) msg.obj;
-				
+				// msg.arg1 : length to read
 				readMessage = new String(readBuf, 0, msg.arg1);
+//				System.out.println(readMessage);
 				String value = "";
-				Pattern MacPat = Pattern.compile("(\\d{4})"); 
+				Pattern MacPat = Pattern.compile("(\\d{1,4})"); 
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
 					n++;
 					toJS += value+",";
-					if (n % 100 == 0 ) {
+					if (n % 125 == 0 ) {
 						toJS += value + "]";
 						callJavaScriptFunctionAndGetResultBack(toJS);
-//						System.out.println(toJS);
+						System.out.println(toJS);
 						toJS = "[";
 						n++;
 					}
-
 				}
-				
-				// *****
 				// callJavaScriptFunctionAndGetResultBack(readMessage);
 				// ////////////////////////////////////////
 				break;

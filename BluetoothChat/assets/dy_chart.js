@@ -1,6 +1,6 @@
 var chart;
-var step = 0.01;	//step0.008每秒125點	//0.005極限
-var xstart = -2+step;
+var step = 0.008;	//step0.008每秒125點	//0.005極限
+var xstart = step;
 //a = Math.random();
 function addSomething(a) {
 //	setInterval(function() {        			 // for testing feq
@@ -81,7 +81,7 @@ $(function () {
                     var data = [],
                         time = (new Date()).getTime(),i;
     
-                    for (i = -8.2; i <= xstart; i+=step) {
+                    for (i = -6.2; i <= xstart; i+=step) {
                         data.push({
                             x: i,
                             y: 0 

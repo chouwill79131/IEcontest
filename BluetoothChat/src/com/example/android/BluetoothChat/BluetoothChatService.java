@@ -44,7 +44,7 @@ import android.util.Log;
  */
 public class BluetoothChatService {
 	String toJS = "[";
-	int n=0, i=0;
+	int n=0;
     // Debugging
     private static final String TAG = "BluetoothChatService";
     private static final boolean D = true;
@@ -450,39 +450,22 @@ public class BluetoothChatService {
         }
 
         public void run() {
-        	
+        	//n,i usable
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[10240];
             int bytes;
+            int i =0;
             // Keep listening to the InputStream while connected
             while (true) {
+            	
                 try {
-                	
                     bytes = mmInStream.read(buffer);
+                    
+//                    System.out.println(bytes);
                     String s = "";
-                    s+=new String(buffer,0, 1024);
-//                    System.out.println(s);
-                    
-                    String value = "";
-    				Pattern MacPat = Pattern.compile("(\\d{1,4})"); 
-    				Matcher matcher = MacPat.matcher(s);
-    				while (matcher.find()) {
-    					value = (matcher.group(1));
-    					n++;
-    					toJS += value+",";
-    				}
-    				if (n % 100 == 0 ) {
-    					toJS += value + "]";
-    					System.out.println(toJS);
-    					Intent intent = new Intent();
-    					Bundle bundle = new Bundle();
-    					bundle.putString("toJS", toJS );
-    					intent.putExtras(bundle);
-    					toJS = "[";
-    					n++;
-    				}
-                    
-                    
+                    s+=new String(buffer,0, bytes);
+                    System.out.println(s+"  :   "+bytes);
+//    				System.out.println(n+"        n         ");
                     mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget();
                 } catch (IOException e) {

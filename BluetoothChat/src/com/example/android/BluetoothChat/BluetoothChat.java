@@ -361,19 +361,20 @@ public class BluetoothChat extends Activity {
 				
 				readMessage = new String(readBuf, 0, msg.arg1);
 				String value = "";
-				Pattern MacPat = Pattern.compile("\r\n(\\d{1,4})"); 
+				Pattern MacPat = Pattern.compile("(\\d{4})"); 
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
 					n++;
 					toJS += value+",";
-				}
-				if (n % 100 == 0 ) {
-					toJS += value + "]";
-//					callJavaScriptFunctionAndGetResultBack(toJS);
-					System.out.println(toJS);
-					toJS = "[";
-					
+					if (n % 100 == 0 ) {
+						toJS += value + "]";
+						callJavaScriptFunctionAndGetResultBack(toJS);
+//						System.out.println(toJS);
+						toJS = "[";
+						n++;
+					}
+
 				}
 				
 				// *****

@@ -336,7 +336,6 @@ public class BluetoothChat extends Activity {
 				
 				
 			case MESSAGE_READ:
-				
 				byte[] readBuf = (byte[]) msg.obj;
 				// msg.arg1 : length to read
 				readMessage = new String(readBuf, 0, msg.arg1);
@@ -347,13 +346,15 @@ public class BluetoothChat extends Activity {
 				while (matcher.find()) {
 					value = (matcher.group(1));
 					n++;
-					toJS += value+",";
-					if (n % 125 == 0 ) {
-						toJS += value + "]";
+					toJS += value;
+					if (n % 100 == 0 ) {
+						toJS += "]";
 						callJavaScriptFunctionAndGetResultBack(toJS);
-						System.out.println(toJS);
+//						System.out.println(toJS);
 						toJS = "[";
 						n++;
+					}else{
+						toJS += ",";
 					}
 				}
 				// callJavaScriptFunctionAndGetResultBack(readMessage);

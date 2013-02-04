@@ -1,5 +1,5 @@
 var chart;
-var step = 0.008;	//step0.008每秒125點	//0.005極限
+var step = 0.01;	//step0.008每秒125點	//0.005極限
 var xstart = step;
 //a = Math.random();
 function addSomething(a) {
@@ -39,6 +39,8 @@ $(function () {
                 tickPixelInterval: 150
             },
             yAxis: {
+            	max:5000,
+            	min:0,
                 title: {
                     text: 'Value'
                 },

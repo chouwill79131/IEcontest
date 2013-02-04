@@ -453,28 +453,29 @@ public class BluetoothChatService {
         public void run() {
         	//n,i usable
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1200];
+            
             int bytes;
-            int i =0;
-            // Keep listening to the InputStream while connected
+            int i =1;
             while (true) {
-            	
+            	try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
                 try {
-                    bytes = mmInStream.read(buffer);
-                    String msg = "";
+                	bytes = mmInStream.read(buffer);
+                	String msg = "";
                     byte ch;
+//                    System.out.println(bytes+" :bytes");
+                    //*****
+//                    while(((byte) mmInStream.read()) !='\n') {
+//                    	bytes +=2;
+//                    }
                     
                     //*****
-                    while((ch=(byte) mmInStream.read())!='\n') {
-                        bytes++;
-                        msg+=ch;
-                    }
-                    //*****
-                    
-                    String s = "";
-                    s+=new String(buffer,0, bytes);
+//                    String s = "";
+//                    s+=new String(buffer,0, bytes);
 //                    System.out.println(s+" :s"+bytes+" :bytes");
-                    
                     mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
                             .sendToTarget();
                 } catch (IOException e) {

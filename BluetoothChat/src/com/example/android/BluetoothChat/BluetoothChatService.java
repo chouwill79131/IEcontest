@@ -453,7 +453,7 @@ public class BluetoothChatService {
         public void run() {
         	//n,i usable
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[1200];
+            byte[] buffer = new byte[1024];
             
             int bytes;
             int i =1;

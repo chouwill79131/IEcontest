@@ -134,19 +134,25 @@ public class BluetoothChat extends Activity {
 				"MyHandler");
 
 		
-		Button btnSet = (Button) this.findViewById(R.id.btnCalc);
-		btnSet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				callJavaScriptFunctionAndGetResultBack(test125);
-				System.out.println("1");
-					
-					
-									
-				// Toast.makeText(BluetoothChat.this, readMessage,
-				// Toast.LENGTH_SHORT).show();
-			}
-		});
+//		Button btnSet = (Button) this.findViewById(R.id.btnCalc);
+//		btnSet.setOnClickListener(new View.OnClickListener() {
+//			String readMessage = "1234\n5678\n9101\n1213\n99";
+//			String readMessage1 = "99\n8888\n";
+//			
+//			public void onClick(View view) {
+//				String value = "";
+//				String value1 = "";
+//				Pattern MacPat = Pattern.compile("(\\d{1,4})\n"); 
+//				Matcher matcher = MacPat.matcher(readMessage);
+//				Pattern MacPat1 = Pattern.compile("(\\d{1,4})"); 
+//				Matcher matcher1 = MacPat1.matcher(readMessage1);
+//				while (matcher.find()) {
+//					value = (matcher.group(1));
+//					System.out.println(value+":1");
+//					System.out.println(matcher.group(2)+":2");
+//				}
+//			}
+//		});
 		
 	}
 
@@ -449,6 +455,4 @@ public class BluetoothChat extends Activity {
 	}
 
 }
-// 1*20
 
-// original

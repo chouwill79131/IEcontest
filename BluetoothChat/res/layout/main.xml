@@ -52,7 +52,7 @@
         android:gravity="left|center_vertical"
         android:text="1. [Java->Javascript] Simple example. Do something on the HTML below. (This is Android Button)" >
     </Button>
-
+<!-- 
     <Button
         android:id="@+id/btnCalc"
         android:layout_width="fill_parent"
@@ -60,7 +60,7 @@
         android:gravity="left|center_vertical"
         android:text="2. [Java->Javascript->Java]" >
     </Button>
-
+-->
     <TextView
         android:id="@+id/myResult"
         android:layout_width="fill_parent"

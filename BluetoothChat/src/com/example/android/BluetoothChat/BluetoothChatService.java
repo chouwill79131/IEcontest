@@ -458,12 +458,18 @@ public class BluetoothChatService {
             int bytes;
             int i =1;
             while (true) {
-            	try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
+            	
                 try {
+                	if(i<7){i++;bytes = mmInStream.read(buffer);}else{
                 	bytes = mmInStream.read(buffer);
+//                	System.out.println(bytes+","+i);i++;
+                	mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
+                    .sendToTarget();
+                	try {
+    					Thread.sleep(1000);
+    				} catch (InterruptedException e) {
+    				}
+                	}
                 	String msg = "";
                     byte ch;
 //                    System.out.println(bytes+" :bytes");
@@ -476,8 +482,7 @@ public class BluetoothChatService {
 //                    String s = "";
 //                    s+=new String(buffer,0, bytes);
 //                    System.out.println(s+" :s"+bytes+" :bytes");
-                    mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
-                            .sendToTarget();
+                    
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
                     connectionLost();

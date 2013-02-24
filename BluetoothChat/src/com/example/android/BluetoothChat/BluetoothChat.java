@@ -31,9 +31,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -63,7 +61,14 @@ public class BluetoothChat extends Activity {
 	public int i = 0; // 取樣計數
 	public int row = 0;
 	public int fine = 0;
+	public int peakcount = 0;
+	public int p1;
+	public int p2;
+	public int p3;
+	
+	int[] point = new int[1000];
 	String readMessage = "";
+
 	public static int var = 125;
 	String toJS = "[";
 	String test50 = "[0.21,0.182,0.206,0.182,0.198,0.182,0.202,0.178,0.202,0.186,0.21,0.206,0.274,0.266,0.322,0.282,0.318,0.262,0.282,0.226,0.246,0.198,0.214,0.182,0.226,0.19,0.222,0.202,0.234,0.21,0.246,0.21,0.238,0.202,0.218,0.194,0.214,0.17,0.206,0.182,0.202,0.182,0.198,0.174,0.206,0.162,0.202,0.206,0.286,0.278,0.278]";
@@ -129,31 +134,32 @@ public class BluetoothChat extends Activity {
 		myResult = (TextView) this.findViewById(R.id.myResult);
 		myWebView = (WebView) this.findViewById(R.id.webView1);
 		myWebView.getSettings().setJavaScriptEnabled(true);
+		myWebView.getSettings().setSupportZoom(true);
+		myWebView.getSettings().setBuiltInZoomControls(true);
 		myWebView.loadUrl("file:///android_asset/index.html");
 		myWebView.addJavascriptInterface(new JavaScriptHandler(this),
 				"MyHandler");
 
-		
-//		Button btnSet = (Button) this.findViewById(R.id.btnCalc);
-//		btnSet.setOnClickListener(new View.OnClickListener() {
-//			String readMessage = "1234\n5678\n9101\n1213\n99";
-//			String readMessage1 = "99\n8888\n";
-//			
-//			public void onClick(View view) {
-//				String value = "";
-//				String value1 = "";
-//				Pattern MacPat = Pattern.compile("(\\d{1,4})\n"); 
-//				Matcher matcher = MacPat.matcher(readMessage);
-//				Pattern MacPat1 = Pattern.compile("(\\d{1,4})"); 
-//				Matcher matcher1 = MacPat1.matcher(readMessage1);
-//				while (matcher.find()) {
-//					value = (matcher.group(1));
-//					System.out.println(value+":1");
-//					System.out.println(matcher.group(2)+":2");
-//				}
-//			}
-//		});
-		
+		// Button btnSet = (Button) this.findViewById(R.id.btnCalc);
+		// btnSet.setOnClickListener(new View.OnClickListener() {
+		String readMessage1 = "1234\n5678\n9101\n1213\n99";
+		String readMessage2 = "99\n8888\n7777\n6666\n5555\n";
+		//
+		// public void onClick(View view) {
+		// String value1 = "";
+		// String value2 = "";
+		// Pattern MacPat = Pattern.compile("(\\d{1,4})\n");
+		// Matcher matcher = MacPat.matcher(readMessage1);
+		// Pattern MacPat1 = Pattern.compile("(\\d{1,4})");
+		// Matcher matcher1 = MacPat1.matcher(readMessage2);
+		// while (matcher.find()) {
+		// value = (matcher.group(1));
+		// System.out.println(value+":1");
+		// System.out.println(matcher.group(2)+":2");
+		// }
+		// }
+		// });
+
 	}
 
 	// *******************
@@ -310,7 +316,7 @@ public class BluetoothChat extends Activity {
 
 	// The Handler that gets information back from the BluetoothChatService
 	private final Handler mHandler = new Handler() {
-		
+
 		@Override
 		public void handleMessage(Message msg) {
 
@@ -339,27 +345,39 @@ public class BluetoothChat extends Activity {
 				String writeMessage = new String(writeBuf);
 				mConversationArrayAdapter.add("Me:  " + writeMessage);
 				break;
-				
-				
+
 			case MESSAGE_READ:
 				byte[] readBuf = (byte[]) msg.obj;
 				// msg.arg1 : length to read
 				readMessage = new String(readBuf, 0, msg.arg1);
-//				System.out.println(readMessage);
+				// System.out.println(readMessage);
 				String value = "";
-				Pattern MacPat = Pattern.compile("(\\d{1,4})"); 
+				Pattern MacPat = Pattern.compile("(\\d{1,4})");
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
+
+					if (i < 1000) {
+						point[i] = Integer.parseInt(value);
+						i++;
+						if (i == 1000) {
+							findpeak(point);
+//							show(point);
+//							System.out.println(point[999]);
+						}
+					} else {
+						break;
+					}
+
 					n++;
 					toJS += value;
-					if (n % 100 == 0 ) {
-						toJS += "]";
+					if (n % 100 == 0) {
+						toJS += "," + value + "]";
 						callJavaScriptFunctionAndGetResultBack(toJS);
-//						System.out.println(toJS);
+						// System.out.println(toJS);
 						toJS = "[";
 						n++;
-					}else{
+					} else {
 						toJS += ",";
 					}
 				}
@@ -382,6 +400,33 @@ public class BluetoothChat extends Activity {
 
 		}
 	};
+
+	public static void show(int[] point) {
+		for (int a = 0; a < point.length; a++) {
+			System.out.println(point[a] + ", ");
+		}
+		System.out.println("");
+	}
+
+	public static void findpeak(int[] point) {
+		int count = 0;
+		int[] peak = new int[1000];
+		//index of point is from 0 to 999
+		for (int a = 0; a < point.length-2; a++) {
+			
+			if(point[a+2] - point[a+1] < 0 & point[a+1] - point[a] > 0){
+				peak[count] = a;
+				show(peak);
+				count++;
+			}
+		}
+	}
+
+	public static void peakdiff(int[] peak) {
+		for (int a = 0; a < peak.length; a++) {
+			System.out.println(peak[a] + ", ");
+		}
+	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (D)
@@ -455,4 +500,3 @@ public class BluetoothChat extends Activity {
 	}
 
 }
-

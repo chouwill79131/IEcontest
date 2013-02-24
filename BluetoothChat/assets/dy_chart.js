@@ -83,7 +83,7 @@ $(function () {
                     var data = [],
                         time = (new Date()).getTime(),i;
     
-                    for (i = -6.2; i <= xstart; i+=step) {
+                    for (i = -4; i <= xstart; i+=step) {
                         data.push({
                             x: i,
                             y: 0 

@@ -61,10 +61,13 @@
         android:text="2. [Java->Javascript->Java]" >
     </Button>
 -->
-    <TextView
-        android:id="@+id/myResult"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp" >
-    </TextView>
+
+    <Button
+        android:id="@+id/btnfft"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="do fft" />
+
+    
 
 </LinearLayout>

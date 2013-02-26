@@ -18,7 +18,6 @@ package com.example.android.BluetoothChat;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -31,6 +30,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
@@ -67,71 +67,54 @@ public class BluetoothChat extends Activity {
 	public int p3;
 	
 	int[] point = new int[1000];
+	int[] ppi = new int[100];
 	String readMessage = "";
 
 	public static int var = 125;
 	String toJS = "[";
+	String forpeaks = "12321232";
 	String test50 = "[0.21,0.182,0.206,0.182,0.198,0.182,0.202,0.178,0.202,0.186,0.21,0.206,0.274,0.266,0.322,0.282,0.318,0.262,0.282,0.226,0.246,0.198,0.214,0.182,0.226,0.19,0.222,0.202,0.234,0.21,0.246,0.21,0.238,0.202,0.218,0.194,0.214,0.17,0.206,0.182,0.202,0.182,0.198,0.174,0.206,0.162,0.202,0.206,0.286,0.278,0.278]";
 	String test200 = "[0.21,0.17,0.206,0.182,0.21,0.186,0.206,0.186,0.21,0.182,0.206,0.178,0.206,0.182,0.206,0.178,0.21,0.182,0.21,0.182,0.202,0.182,0.202,0.182,0.198,0.178,0.198,0.182,0.218,0.182,0.21,0.182,0.202,0.182,0.202,0.182,0.206,0.182,0.206,0.178,0.206,0.182,0.206,0.178,0.202,0.182,0.202,0.186,0.206,0.186,0.206,0.186,0.214,0.186,0.21,0.186,0.214,0.198,0.23,0.206,0.238,0.218,0.262,0.23,0.274,0.242,0.294,0.254,0.306,0.266,0.33,0.274,0.322,0.278,0.322,0.278,0.322,0.282,0.338,0.282,0.326,0.282,0.334,0.278,0.318,0.27,0.314,0.27,0.306,0.262,0.302,0.254,0.29,0.25,0.282,0.238,0.27,0.238,0.266,0.226,0.258,0.222,0.25,0.218,0.246,0.21,0.234,0.206,0.23,0.198,0.222,0.198,0.218,0.19,0.214,0.19,0.222,0.186,0.214,0.182,0.226,0.19,0.206,0.186,0.226,0.19,0.222,0.19,0.214,0.19,0.218,0.194,0.23,0.198,0.222,0.198,0.226,0.202,0.226,0.202,0.23,0.202,0.23,0.198,0.234,0.198,0.234,0.21,0.238,0.21,0.238,0.21,0.242,0.214,0.246,0.214,0.238,0.214,0.242,0.21,0.238,0.21,0.238,0.206,0.238,0.21,0.254,0.206,0.234,0.202,0.238,0.198,0.222,0.198,0.218,0.198,0.218,0.194,0.242,0.194,0.218,0.19,0.222,0.19,0.214,0.19,0.218,0.186,0.21,0.17,0.206,0.186,0.206,0.178,0.206,0.182,0.206,0.182,0.206,0.182,0.202,0.182,0.202,0.178,0.202,0.158,0.202,0.182,0.206,0.182,0.198,0.178,0.202,0.178,0.198,0.174,0.206,0.174,0.202,0.174,0.206,0.174,0.198,0.174,0.206,0.17,0.19,0.17,0.198,0.162,0.19,0.17,0.194,0.178,0.202,0.186,0.226,0.198,0.23,0.206,0.25,0.226,0.266,0.242,0.286,0.25,0.298,0.262,0.314,0.278,0.278]";
 	String test125 = "[0.17,0.182,0.186,0.186,0.182,0.178,0.182,0.178,0.182,0.182,0.182,0.182,0.178,0.182,0.182,0.182,0.182,0.182,0.182,0.178,0.182,0.178,0.182,0.186,0.186,0.186,0.186,0.186,0.198,0.206,0.218,0.23,0.242,0.254,0.266,0.274,0.278,0.278,0.282,0.282,0.282,0.278,0.27,0.27,0.262,0.254,0.25,0.238,0.238,0.226,0.222,0.218,0.21,0.206,0.198,0.198,0.19,0.19,0.186,0.182,0.19,0.186,0.19,0.19,0.19,0.194,0.198,0.198,0.202,0.202,0.202,0.198,0.198,0.21,0.21,0.21,0.214,0.214,0.214,0.21,0.21,0.206,0.21,0.206,0.202,0.198,0.198,0.198,0.194,0.194,0.19,0.19,0.19,0.186,0.17,0.186,0.178,0.182,0.182,0.182,0.182,0.178,0.158,0.182,0.182,0.178,0.178,0.174,0.174,0.174,0.174,0.174,0.17,0.17,0.162,0.17,0.178,0.186,0.198,0.206,0.226,0.242,0.25,0.262,0.278,0.278]";
-	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
 	private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
 	private static final int REQUEST_ENABLE_BT = 3;
-
-	// Layout Views
 	private TextView mTitle;
 	private ListView mConversationView;
 	private EditText mOutEditText;
 	private Button mSendButton;
-
-	// Name of the connected device
 	private String mConnectedDeviceName = null;
-	// Array adapter for the conversation thread
 	private ArrayAdapter<String> mConversationArrayAdapter;
-	// String buffer for outgoing messages
 	private StringBuffer mOutStringBuffer;
-	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
-	// Member object for the chat services
 	private BluetoothChatService mChatService = null;
-
 	WebView myWebView;
 	TextView myResult;
-
 	StringBuilder sb = new StringBuilder();
 	float out;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (D)
 			Log.e(TAG, "+++ ON CREATE +++");
-
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 				R.layout.custom_title);
-
 		// Set up the custom title
 		mTitle = (TextView) findViewById(R.id.title_left_text);
 		mTitle.setText(R.string.app_name);
 		mTitle = (TextView) findViewById(R.id.title_right_text);
-
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
 		// If the adapter is null, then Bluetooth is not supported
 		if (mBluetoothAdapter == null) {
 			Toast.makeText(this, "Bluetooth is not available",
 					Toast.LENGTH_LONG).show();
-			// finish();
 			return;
 		}
 		// ***************
-		
-		myResult = (TextView) this.findViewById(R.id.myResult);
 		myWebView = (WebView) this.findViewById(R.id.webView1);
 		myWebView.getSettings().setJavaScriptEnabled(true);
 		myWebView.getSettings().setSupportZoom(true);
@@ -139,27 +122,28 @@ public class BluetoothChat extends Activity {
 		myWebView.loadUrl("file:///android_asset/index.html");
 		myWebView.addJavascriptInterface(new JavaScriptHandler(this),
 				"MyHandler");
-
 		// Button btnSet = (Button) this.findViewById(R.id.btnCalc);
 		// btnSet.setOnClickListener(new View.OnClickListener() {
 		String readMessage1 = "1234\n5678\n9101\n1213\n99";
 		String readMessage2 = "99\n8888\n7777\n6666\n5555\n";
-		//
-		// public void onClick(View view) {
-		// String value1 = "";
-		// String value2 = "";
-		// Pattern MacPat = Pattern.compile("(\\d{1,4})\n");
-		// Matcher matcher = MacPat.matcher(readMessage1);
-		// Pattern MacPat1 = Pattern.compile("(\\d{1,4})");
-		// Matcher matcher1 = MacPat1.matcher(readMessage2);
-		// while (matcher.find()) {
-		// value = (matcher.group(1));
-		// System.out.println(value+":1");
-		// System.out.println(matcher.group(2)+":2");
-		// }
-		// }
-		// });
-
+		
+		Button btnFFT = (Button)this.findViewById(R.id.btnfft);
+//		btnFFT.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				int[] X = ppi;
+//				int N = X.length;
+//				Complex[] C = new Complex[N];
+//				int i = 0;
+//				for(int value:X){
+//					C[i] = new Complex(value, 0);
+//					i++;
+//				}
+//				Complex[] y = FFT.fft(C);
+//				show(y, "y");
+//				show(C, "C");
+//			}
+//		});
 	}
 
 	// *******************
@@ -271,12 +255,6 @@ public class BluetoothChat extends Activity {
 		}
 	}
 
-	/**
-	 * Sends a message.
-	 * 
-	 * @param message
-	 *            A string of text to send.
-	 */
 	private void sendMessage(String message) {
 		// Check that we're actually connected before trying anything
 		if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
@@ -352,18 +330,16 @@ public class BluetoothChat extends Activity {
 				readMessage = new String(readBuf, 0, msg.arg1);
 				// System.out.println(readMessage);
 				String value = "";
-				Pattern MacPat = Pattern.compile("(\\d{1,4})");
+				Pattern MacPat = Pattern.compile("(\\d{4})");
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
-
-					if (i < 1000) {
+					if (i < 500) {
 						point[i] = Integer.parseInt(value);
 						i++;
-						if (i == 1000) {
+						if (i == 500) {
 							findpeak(point);
 //							show(point);
-//							System.out.println(point[999]);
 						}
 					} else {
 						break;
@@ -403,31 +379,158 @@ public class BluetoothChat extends Activity {
 
 	public static void show(int[] point) {
 		for (int a = 0; a < point.length; a++) {
-			System.out.println(point[a] + ", ");
+			System.out.print(point[a] + ", ");
 		}
 		System.out.println("");
 	}
 
 	public static void findpeak(int[] point) {
+		// find peak bigger than 1500 and separate by at least 50
 		int count = 0;
-		int[] peak = new int[1000];
+		int[] peak = new int[100] ;
+		int b = 0;
+//		show(point);
 		//index of point is from 0 to 999
 		for (int a = 0; a < point.length-2; a++) {
-			
-			if(point[a+2] - point[a+1] < 0 & point[a+1] - point[a] > 0){
-				peak[count] = a;
-				show(peak);
-				count++;
+			if(point[a+2] - point[a+1] < 0 & point[a+1] - point[a] > 0 & point[a+1] > 2500){
+//				System.out.println(point[3]+","+point[2]+",1");
+				
+				if(a+1 - peak[count] < 50 ){
+				}else{ 	
+					count++;
+					peak[count] = a+1;
+					b = a+1;
+				}
 			}
 		}
+		if(count % 2 == 0){
+		}else{
+			peak[count++] = b;
+			}
+		show(peak);
+		peakdiff(peak,count);
 	}
 
-	public static void peakdiff(int[] peak) {
-		for (int a = 0; a < peak.length; a++) {
-			System.out.println(peak[a] + ", ");
+	public static void peakdiff(int[] peak,int count) {
+		int[] ppi = new int[count];
+		for (int a = 0; a < peak.length-1; a++) {
+			if(peak[a+1] <= peak[a]){
+			}else{
+				ppi[a] = peak[a+1] - peak[a];
+			}
 		}
-	}
+		show(ppi);
+		int[] X = ppi;
+		int N = X.length;
+		System.out.println(N);
+//		if(true){return;}
+		Complex[] C = new Complex[N];
 
+		int i = 0;
+		for(int value:X){
+			C[i] = new Complex(value, 0);
+			i++;
+		}
+//		if(true){return;}
+		Complex[] y = FFT.fft(C);
+		show(y, "y");
+		show(C, "C");
+	}
+	
+	public static void show(Complex[] x, String title) {
+        System.out.println(x);
+        System.out.println("-------------------");
+        for (int i = 0; i < x.length; i++) {
+            System.out.println(x[i]);
+        }
+        System.out.println();
+    }
+	public static class FFT {
+        // compute the FFT of x[], assuming its length is a power of 2
+        public static  Complex[] fft(Complex[] C) {
+            int N = C.length; 
+            // base case
+            if (N == 1) return new Complex[] { C[0] };
+            
+            // radix 2 Cooley-Tukey FFT
+            if (N % 2 != 0) { throw new RuntimeException("N is not a power of 2"); }
+            
+            // fft of even terms
+            Complex[] even = new Complex[N/2];
+            for (int k = 0; k < N/2; k++) {
+                even[k] = C[2*k];
+            }
+           
+            Complex[] q = fft(even); //!!!
+            
+            // fft of odd terms
+            Complex[] odd  = even;  // reuse the array
+            for (int k = 0; k < N/2; k++) {
+                odd[k] = C[2*k + 1];
+            }
+            Complex[] r = fft(odd);
+
+            // combine
+            Complex[] y = new Complex[N];
+            for (int k = 0; k < N/2; k++) {
+                double kth = -2 * k * Math.PI / N;
+                Complex wk = new Complex(Math.cos(kth), Math.sin(kth));
+                y[k]       = q[k].plus(wk.times(r[k]));
+                y[k + N/2] = q[k].minus(wk.times(r[k]));
+            }
+            return y;
+        }
+
+    }
+    
+    public static class Complex {
+        private final double re;   // the real part
+        private final double im;   // the imaginary part
+
+        // create a new object with the given real and imaginary parts
+        public Complex(double real, double imag) {
+            re = real;
+            im = imag;
+        }
+        
+        public String toString() {
+            if (im == 0) return re + "";
+            if (re == 0) return im + "i";
+            if (im <  0) return re + " - " + (-im) + "i";
+            return re + " + " + im + "i";
+        }
+        public Complex plus(Complex b) {
+            Complex a = this;             // invoking object
+            double real = a.re + b.re;
+            double imag = a.im + b.im;
+            return new Complex(real, imag);
+        }
+
+        // return a new Complex object whose value is (this - b)
+        public Complex minus(Complex b) {
+            Complex a = this;
+            double real = a.re - b.re;
+            double imag = a.im - b.im;
+            return new Complex(real, imag);
+        }
+
+        public Complex times(Complex b) {
+            Complex a = this;
+            double real = a.re * b.re - a.im * b.im;
+            double imag = a.re * b.im + a.im * b.re;
+            return new Complex(real, imag);
+        }
+        public Complex sin() {
+            return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re) * Math.sinh(im));
+        }
+
+        // return a new Complex object whose value is the complex cosine of this
+        public Complex cos() {
+            return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
+        }
+        
+    };
+	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (D)
 			Log.d(TAG, "onActivityResult " + resultCode);

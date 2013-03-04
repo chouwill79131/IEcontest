@@ -45,7 +45,6 @@ public class BluetoothChat extends Activity {
 	// Debugging
 	private static final String TAG = "BluetoothChat";
 	private static final boolean D = true;
-
 	// Message types sent from the BluetoothChatService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
@@ -91,9 +90,11 @@ public class BluetoothChat extends Activity {
 	WebView myWebView;
 	TextView myResult;
 	StringBuilder sb = new StringBuilder();
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		if (D)
 			Log.e(TAG, "+++ ON CREATE +++");
@@ -136,6 +137,7 @@ public class BluetoothChat extends Activity {
 		// }
 		// }
 		// });
+		
 	}
 
 	// *******************
@@ -322,7 +324,7 @@ public class BluetoothChat extends Activity {
 				readMessage = new String(readBuf, 0, msg.arg1);
 				// System.out.println(readMessage);
 				String value = "";
-				Pattern MacPat = Pattern.compile("(\\d{4})");
+				Pattern MacPat = Pattern.compile("(\\d{3,4})");
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
@@ -331,6 +333,7 @@ public class BluetoothChat extends Activity {
 						i++;
 						if (i == 9000) {
 							findpeak(point);
+							Toast.makeText(getApplicationContext(),findpeak(point)+"" , 5000).show();
 							// show(point);
 						}
 					} else {
@@ -381,7 +384,7 @@ public class BluetoothChat extends Activity {
 		System.out.println("");
 	}
 
-	public static void findpeak(int[] point) {
+	public static double findpeak(int[] point) {
 		// find peak bigger than 1500 and separate by at least 50
 		int count = 0;
 		int[] peak = new int[200];
@@ -390,7 +393,7 @@ public class BluetoothChat extends Activity {
 		// index of point is from 0 to 999
 		for (int a = 0; a < point.length - 2; a++) {
 			if (point[a + 2] - point[a + 1] < 0 & point[a + 1] - point[a] > 0
-					& point[a + 1] > 2500) {
+					& point[a + 1] > 800) {
 				if (a + 1 - peak[count] < 50) {
 				} else {
 					count++;
@@ -405,9 +408,10 @@ public class BluetoothChat extends Activity {
 		}
 		// show(peak);
 		peakdiff(peak, count);
+		return peakdiff(peak, count);
 	}
 
-	public static void peakdiff(int[] peak, int count) {
+	public static double peakdiff(int[] peak, int count) {
 		int[] ppi = new int[count];
 		for (int a = 0; a < peak.length - 1; a++) {
 			if (peak[a + 1] <= peak[a]) {
@@ -446,9 +450,20 @@ public class BluetoothChat extends Activity {
 		// }
 		Complex[] y = FFT.fft(C);
 		double[] abs = new double[N];
-		
 		abs = sqr(y);
-		show(abs);
+		double LF = 0;
+		double HF = 0;
+		for(int lf = 4; lf<14; lf++){
+			LF += abs[lf];
+		}
+		LF = (LF*0.11)/10;
+		for(int hf = 14; hf<37; hf++){
+			HF += abs[hf];
+		}
+		HF = (HF*0.25)/23;
+		return LF/HF;
+//		System.out.println(LF/HF+"	LF/HF");
+//		show(abs);
 //		show(y, "y");
 	}
 

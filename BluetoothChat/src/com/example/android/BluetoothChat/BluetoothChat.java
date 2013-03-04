@@ -65,8 +65,8 @@ public class BluetoothChat extends Activity {
 	public int p1;
 	public int p2;
 	public int p3;
-	
-	int[] point = new int[1000];
+
+	int[] point = new int[9000];
 	int[] ppi = new int[100];
 	String readMessage = "";
 
@@ -91,7 +91,7 @@ public class BluetoothChat extends Activity {
 	WebView myWebView;
 	TextView myResult;
 	StringBuilder sb = new StringBuilder();
-	float out;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -124,26 +124,18 @@ public class BluetoothChat extends Activity {
 				"MyHandler");
 		// Button btnSet = (Button) this.findViewById(R.id.btnCalc);
 		// btnSet.setOnClickListener(new View.OnClickListener() {
-		String readMessage1 = "1234\n5678\n9101\n1213\n99";
-		String readMessage2 = "99\n8888\n7777\n6666\n5555\n";
-		
-		Button btnFFT = (Button)this.findViewById(R.id.btnfft);
-//		btnFFT.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				int[] X = ppi;
-//				int N = X.length;
-//				Complex[] C = new Complex[N];
-//				int i = 0;
-//				for(int value:X){
-//					C[i] = new Complex(value, 0);
-//					i++;
-//				}
-//				Complex[] y = FFT.fft(C);
-//				show(y, "y");
-//				show(C, "C");
-//			}
-//		});
+
+		// Button btnFFT = (Button) this.findViewById(R.id.btnfft);
+		// btnFFT.setOnClickListener(new View.OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// try {
+		// super.wait(2000);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// });
 	}
 
 	// *******************
@@ -334,17 +326,16 @@ public class BluetoothChat extends Activity {
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
-					if (i < 500) {
+					if (i < 9000) {
 						point[i] = Integer.parseInt(value);
 						i++;
-						if (i == 500) {
+						if (i == 9000) {
 							findpeak(point);
-//							show(point);
+							// show(point);
 						}
 					} else {
 						break;
 					}
-
 					n++;
 					toJS += value;
 					if (n % 100 == 0) {
@@ -383,154 +374,196 @@ public class BluetoothChat extends Activity {
 		}
 		System.out.println("");
 	}
+	public static void show(double[] point) {
+		for (int a = 0; a < point.length; a++) {
+			System.out.print(point[a] + ", ");
+		}
+		System.out.println("");
+	}
 
 	public static void findpeak(int[] point) {
 		// find peak bigger than 1500 and separate by at least 50
 		int count = 0;
-		int[] peak = new int[100] ;
+		int[] peak = new int[200];
 		int b = 0;
-//		show(point);
-		//index of point is from 0 to 999
-		for (int a = 0; a < point.length-2; a++) {
-			if(point[a+2] - point[a+1] < 0 & point[a+1] - point[a] > 0 & point[a+1] > 2500){
-//				System.out.println(point[3]+","+point[2]+",1");
-				
-				if(a+1 - peak[count] < 50 ){
-				}else{ 	
+		// show(point);
+		// index of point is from 0 to 999
+		for (int a = 0; a < point.length - 2; a++) {
+			if (point[a + 2] - point[a + 1] < 0 & point[a + 1] - point[a] > 0
+					& point[a + 1] > 2500) {
+				if (a + 1 - peak[count] < 50) {
+				} else {
 					count++;
-					peak[count] = a+1;
-					b = a+1;
+					peak[count] = a + 1;
+					b = a + 1;
 				}
 			}
 		}
-		if(count % 2 == 0){
-		}else{
+		if (count % 2 == 0) {
+		} else {
 			peak[count++] = b;
-			}
-		show(peak);
-		peakdiff(peak,count);
+		}
+		// show(peak);
+		peakdiff(peak, count);
 	}
 
-	public static void peakdiff(int[] peak,int count) {
+	public static void peakdiff(int[] peak, int count) {
 		int[] ppi = new int[count];
-		for (int a = 0; a < peak.length-1; a++) {
-			if(peak[a+1] <= peak[a]){
-			}else{
-				ppi[a] = peak[a+1] - peak[a];
+		for (int a = 0; a < peak.length - 1; a++) {
+			if (peak[a + 1] <= peak[a]) {
+			} else {
+				ppi[a] = peak[a + 1] - peak[a];
 			}
 		}
 		show(ppi);
-		int[] X = ppi;
-		int N = X.length;
-		System.out.println(N);
-//		if(true){return;}
-		Complex[] C = new Complex[N];
-
+		int X = 0;
+		for (int a : ppi) {
+			X += a;
+		}
+		int N = X;
+		System.out.println(N + "	number of peak");
+		Complex[] C = new Complex[8192];
+		int j = 0;
 		int i = 0;
-		for(int value:X){
-			C[i] = new Complex(value, 0);
+		for (int value : ppi) {
+			for (int k = 0; k < ppi[j]; k++) {
+				C[i] = new Complex(value, 0);
+				i++;
+				if (i == 8192) {
+					break;
+				}
+			}
+			if (i == 8192) {
+				break;
+			}
+			j++;
+		}
+
+		// System.out.println(C.length + "	C.length");
+		// show(C, "C");
+		// if (true) {
+		// return;
+		// }
+		Complex[] y = FFT.fft(C);
+		double[] abs = new double[N];
+		
+		abs = sqr(y);
+		show(abs);
+//		show(y, "y");
+	}
+
+	public static void show(Complex[] x, String title) {
+		System.out.println("-------------------");
+		for (int i = 0; i < x.length; i++) {
+			System.out.println(x[i]);
+		}
+		System.out.println("complex");
+	}
+
+	public static class FFT {
+		// compute the FFT of x[], assuming its length is a power of 2
+		public static Complex[] fft(Complex[] C) {
+			int N = C.length;
+			// base case
+			if (N == 1)
+				return new Complex[] { C[0] };
+			if (N % 2 != 0) {
+				throw new RuntimeException("N is not a power of 2");
+			}
+
+			// fft of even terms
+			Complex[] even = new Complex[N / 2];
+			for (int k = 0; k < N / 2; k++) {
+				even[k] = C[2 * k];
+			}
+
+			Complex[] q = fft(even); // !!!
+
+			// fft of odd terms
+			Complex[] odd = even; // reuse the array
+			for (int k = 0; k < N / 2; k++) {
+				odd[k] = C[2 * k + 1];
+			}
+			Complex[] r = fft(odd);
+
+			// combine
+			Complex[] y = new Complex[N];
+			for (int k = 0; k < N / 2; k++) {
+				double kth = -2 * k * Math.PI / N;
+				Complex wk = new Complex(Math.cos(kth), Math.sin(kth));
+				y[k] = q[k].plus(wk.times(r[k]));
+				y[k + N / 2] = q[k].minus(wk.times(r[k]));
+			}
+			
+			return y;
+		}
+	}
+	public static double[] sqr(Complex[] b) {
+		int i = 0;
+		double[] abs = new double[8192];
+		for (Complex a : b) {
+			abs[i] = Math.sqrt(Math.pow(a.re, 2) + Math.pow(a.im, 2));
 			i++;
 		}
-//		if(true){return;}
-		Complex[] y = FFT.fft(C);
-		show(y, "y");
-		show(C, "C");
+		return abs;
 	}
-	
-	public static void show(Complex[] x, String title) {
-        System.out.println(x);
-        System.out.println("-------------------");
-        for (int i = 0; i < x.length; i++) {
-            System.out.println(x[i]);
-        }
-        System.out.println();
-    }
-	public static class FFT {
-        // compute the FFT of x[], assuming its length is a power of 2
-        public static  Complex[] fft(Complex[] C) {
-            int N = C.length; 
-            // base case
-            if (N == 1) return new Complex[] { C[0] };
-            
-            // radix 2 Cooley-Tukey FFT
-            if (N % 2 != 0) { throw new RuntimeException("N is not a power of 2"); }
-            
-            // fft of even terms
-            Complex[] even = new Complex[N/2];
-            for (int k = 0; k < N/2; k++) {
-                even[k] = C[2*k];
-            }
-           
-            Complex[] q = fft(even); //!!!
-            
-            // fft of odd terms
-            Complex[] odd  = even;  // reuse the array
-            for (int k = 0; k < N/2; k++) {
-                odd[k] = C[2*k + 1];
-            }
-            Complex[] r = fft(odd);
+	public static class Complex {
+		private final double re; // the real part
+		private final double im; // the imaginary part
 
-            // combine
-            Complex[] y = new Complex[N];
-            for (int k = 0; k < N/2; k++) {
-                double kth = -2 * k * Math.PI / N;
-                Complex wk = new Complex(Math.cos(kth), Math.sin(kth));
-                y[k]       = q[k].plus(wk.times(r[k]));
-                y[k + N/2] = q[k].minus(wk.times(r[k]));
-            }
-            return y;
-        }
+		// create a new object with the given real and imaginary parts
+		public Complex(double real, double imag) {
+			re = real;
+			im = imag;
+		}
 
-    }
-    
-    public static class Complex {
-        private final double re;   // the real part
-        private final double im;   // the imaginary part
+		
 
-        // create a new object with the given real and imaginary parts
-        public Complex(double real, double imag) {
-            re = real;
-            im = imag;
-        }
-        
-        public String toString() {
-            if (im == 0) return re + "";
-            if (re == 0) return im + "i";
-            if (im <  0) return re + " - " + (-im) + "i";
-            return re + " + " + im + "i";
-        }
-        public Complex plus(Complex b) {
-            Complex a = this;             // invoking object
-            double real = a.re + b.re;
-            double imag = a.im + b.im;
-            return new Complex(real, imag);
-        }
+		public String toString() {
+			if (im == 0)
+				return re + "";
+			if (re == 0)
+				return im + "i";
+			if (im < 0)
+				return re + " - " + (-im) + "i";
+			return re + " + " + im + "i";
+		}
 
-        // return a new Complex object whose value is (this - b)
-        public Complex minus(Complex b) {
-            Complex a = this;
-            double real = a.re - b.re;
-            double imag = a.im - b.im;
-            return new Complex(real, imag);
-        }
+		public Complex plus(Complex b) {
+			Complex a = this; // invoking object
+			double real = a.re + b.re;
+			double imag = a.im + b.im;
+			return new Complex(real, imag);
+		}
 
-        public Complex times(Complex b) {
-            Complex a = this;
-            double real = a.re * b.re - a.im * b.im;
-            double imag = a.re * b.im + a.im * b.re;
-            return new Complex(real, imag);
-        }
-        public Complex sin() {
-            return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re) * Math.sinh(im));
-        }
+		// return a new Complex object whose value is (this - b)
+		public Complex minus(Complex b) {
+			Complex a = this;
+			double real = a.re - b.re;
+			double imag = a.im - b.im;
+			return new Complex(real, imag);
+		}
 
-        // return a new Complex object whose value is the complex cosine of this
-        public Complex cos() {
-            return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
-        }
-        
-    };
-	
+		public Complex times(Complex b) {
+			Complex a = this;
+			double real = a.re * b.re - a.im * b.im;
+			double imag = a.re * b.im + a.im * b.re;
+			return new Complex(real, imag);
+		}
+
+		public Complex sin() {
+			return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re)
+					* Math.sinh(im));
+		}
+
+		// return a new Complex object whose value is the complex cosine of this
+		public Complex cos() {
+			return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re)
+					* Math.sinh(im));
+		}
+
+	};
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (D)
 			Log.d(TAG, "onActivityResult " + resultCode);

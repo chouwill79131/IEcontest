@@ -60,14 +60,14 @@
         android:gravity="left|center_vertical"
         android:text="2. [Java->Javascript->Java]" >
     </Button>
--->
+
 
     <Button
         android:id="@+id/btnfft"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:text="do fft" />
-
+-->
     
 
 </LinearLayout>

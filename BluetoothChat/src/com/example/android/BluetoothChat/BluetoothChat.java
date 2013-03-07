@@ -118,9 +118,9 @@ public class BluetoothChat extends Activity {
 		// ***************
 		myWebView = (WebView) this.findViewById(R.id.webView1);
 		myWebView.getSettings().setJavaScriptEnabled(true);
-		myWebView.getSettings().setSupportZoom(true);
-		myWebView.getSettings().setBuiltInZoomControls(true);
-		myWebView.loadUrl("file:///android_asset/index.html");
+//		myWebView.getSettings().setSupportZoom(true);
+//		myWebView.getSettings().setBuiltInZoomControls(true);
+		myWebView.loadUrl("file:///android_asset/main.html");
 		myWebView.addJavascriptInterface(new JavaScriptHandler(this),
 				"MyHandler");
 		// Button btnSet = (Button) this.findViewById(R.id.btnCalc);
@@ -324,7 +324,7 @@ public class BluetoothChat extends Activity {
 				readMessage = new String(readBuf, 0, msg.arg1);
 				// System.out.println(readMessage);
 				String value = "";
-				Pattern MacPat = Pattern.compile("(\\d{3,4})");
+				Pattern MacPat = Pattern.compile("(\\d{4})");
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));

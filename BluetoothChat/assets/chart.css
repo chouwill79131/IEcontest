@@ -1,0 +1,6 @@
+body {style=margin:0; padding:0;}
+.main1 {width:100%; height:100%;background-image: url(button/background.png); background-size: 100% 100%;}
+#dy_chart {width:auto; height:80%;}
+#foot { height:20%;}
+#foot button {background: transparent; border:none;margin-left:40%;width: auto;}
+.stop img { margin:0 auto; width: auto;  height:70%; }

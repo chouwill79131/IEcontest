@@ -17,6 +17,12 @@ function addSomething(a) {
 	chart.redraw();
 //	}, 1000);									// for testing feq
 }
+
+$(".measure").click(function() {
+  //alert("aa");
+  window.location.href = "chart.html";
+});
+
 $(function () {
     $(document).ready(function() {
         Highcharts.setOptions({
@@ -28,26 +34,33 @@ $(function () {
         chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'dy_chart',
+                backgroundColor: 'transparent',
                 type: 'spline',
                 marginRight: 10,
             },
+            credits: {
+            enabled:false
+            }
+            ,
             title: {
-                text: 'Live data'
+            	style:{ color: '#FFFFFF'},
+                text: 'Electrondiagram',
             },
             xAxis: {
                 type: 'x Axis',
+                style:{ color: '#FFFFFF'},
                 tickPixelInterval: 150
             },
             yAxis: {
             	max:5000,
             	min:0,
                 title: {
+                	style:{ color: '#FFFFFF'},
                     text: 'Value'
                 },
                 plotLines: [{
                     value: 0,
                     width: 1,
-                    color: '#808080'
                 }]
             },
             
@@ -78,6 +91,7 @@ $(function () {
             },
             series: [{
                 name: 'Data',
+                color: '#FFFFFF',
                 data: (function() {
                     // generate an array of random data
                     var data = [],

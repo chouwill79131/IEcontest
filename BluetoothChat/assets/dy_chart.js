@@ -18,12 +18,12 @@ function addSomething(a) {
 //	}, 1000);									// for testing feq
 }
 
-$(".measure").click(function() {
-  //alert("aa");
-  window.location.href = "chart.html";
-});
+
 
 $(function () {
+	$(".stop").click(function() {
+  		window.location.href = "complete.html";
+});
     $(document).ready(function() {
         Highcharts.setOptions({
             global: {
@@ -52,7 +52,7 @@ $(function () {
                 tickPixelInterval: 150
             },
             yAxis: {
-            	max:5000,
+            	max:1500,
             	min:0,
                 title: {
                 	style:{ color: '#FFFFFF'},

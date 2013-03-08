@@ -324,7 +324,7 @@ public class BluetoothChat extends Activity {
 				readMessage = new String(readBuf, 0, msg.arg1);
 				// System.out.println(readMessage);
 				String value = "";
-				Pattern MacPat = Pattern.compile("(\\d{4})");
+				Pattern MacPat = Pattern.compile("(\\d{3,4})");
 				Matcher matcher = MacPat.matcher(readMessage);
 				while (matcher.find()) {
 					value = (matcher.group(1));
@@ -393,7 +393,7 @@ public class BluetoothChat extends Activity {
 		// index of point is from 0 to 999
 		for (int a = 0; a < point.length - 2; a++) {
 			if (point[a + 2] - point[a + 1] < 0 & point[a + 1] - point[a] > 0
-					& point[a + 1] > 800) {
+					& point[a + 1] > 500) {
 				if (a + 1 - peak[count] < 50) {
 				} else {
 					count++;
@@ -402,10 +402,7 @@ public class BluetoothChat extends Activity {
 				}
 			}
 		}
-		if (count % 2 == 0) {
-		} else {
-			peak[count++] = b;
-		}
+		
 		// show(peak);
 		peakdiff(peak, count);
 		return peakdiff(peak, count);
@@ -419,6 +416,7 @@ public class BluetoothChat extends Activity {
 				ppi[a] = peak[a + 1] - peak[a];
 			}
 		}
+		
 		show(ppi);
 		int X = 0;
 		for (int a : ppi) {

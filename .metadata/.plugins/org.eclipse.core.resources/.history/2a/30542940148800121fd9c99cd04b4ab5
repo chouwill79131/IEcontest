@@ -1,0 +1,32 @@
+@font-face {
+    font-family: droidsans;
+    src: url(fonts/droidsans.ttf);  
+}
+
+body { margin:0; padding:0;}
+#main { width: auto; height: 100%; background-image: url(button/background.png); background-size: 100% 100%; }
+.left, .mid, .right {float: left; height: 100%; }
+
+
+.left {  width: 28%; padding-left:2%;}
+.text, .hr { text-align: center; }
+.text { margin-top: 20%; color:white; }
+.hr {   margin-top: 80%; color:white; font-family: droidsans ;}
+.date {  }
+
+.mid { width: 41%; }
+.rhythm, .circle { width: auto; height:70%; margin-left: 4%; }
+.rhythm { margin-top: 20%; z-index: 1; }
+.circle { margin-top: -86.5%; z-index: 2; position: relative;}
+
+.right { width: 29%; }
+.right button { float: left; border: none; background: transparent; }
+.measure img {margin-top: 5%; width: auto;  height:15%; }
+.share img, .record img { width: auto;  height:18%; }
+.measure { margin-left: 2%; margin-top: 15%; }
+.share, .record { background: red;margin-top: 70%; margin-left: 2%; }
+
+
+<!--
+border? font? .record_top
+-->

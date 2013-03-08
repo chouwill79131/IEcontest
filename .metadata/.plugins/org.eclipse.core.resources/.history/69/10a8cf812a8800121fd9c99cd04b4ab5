@@ -1,0 +1,18 @@
+$(document).ready(function() {
+   	$(".measure").click(function() {
+ 	 window.location.href = "chart.html";
+	});
+ 	$(".share").click(function() {
+ 	sleep(1000);
+ 	 document.getElementById("mid").innerHTML='<img src="button/complete.png" style="width:120%; margin-top:41%;" />';
+ 	 sleep(1000);
+ 	 document.getElementById("mid").sleep(1000).innerHTML='<div class="score">85</div>
+			<img class="circle" src="button/circle.png" />';
+	});
+	
+	function sleep(n)
+  {
+    var start=new Date().getTime();
+    while(true) if(new Date().getTime()-start>n) break;
+  }
+});

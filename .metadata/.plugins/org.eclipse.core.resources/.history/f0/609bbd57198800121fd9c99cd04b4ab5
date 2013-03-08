@@ -1,0 +1,39 @@
+@font-face {
+    font-family: droidsans;
+    src: url(fonts/droidsans.ttf);  
+}
+
+@font-face {
+    font-family: DroidSans-Bold;
+    src: url(fonts/DroidSans-Bold.ttf);  
+}
+
+body { margin:0; padding:0;}
+#main { width: auto; height: 100%; background-image: url(button/background.png); background-size: 100% 100%; }
+.left, .mid, .right {float: left; height: 100%; }
+
+
+.left {  width: 28%; padding-left:2%;}
+.text, .hr , .date{ text-align: center; color:white;}
+.word { margin-top: 25%;  font-family: DroidSans-Bold ; }
+.subword, .date { margin-top:-12%; font-family: droidsans ;}
+.hr {  border:solid red ; margin-top: 65%;  font-family: DroidSans-Bold ;}
+#hr {border:solid red; float:left; margin-left: -10% ;}
+.date { font-family: droidsans ;}
+
+.mid { width: 41%; }
+.rhythm, .circle { width: auto; height:70%; margin-left: 4%; }
+.rhythm { margin-top: 22%; z-index: 1;  margin-left:-28% ;}
+.circle { margin-top: -86.5%; z-index: 2; }
+
+.right { width: 29%; }
+.right button { float: left; border: none; background: transparent; }
+.measure img {margin-top: 10%; width: auto;  height:15%; }
+.share img, .record img { width: auto;  height:18%; }
+.measure { margin-left: 2%; margin-top: 15%; }
+.share, .record { background: red;margin-top: 70%; margin-left: 2%; }
+
+
+<!--
+border? font? .record_top
+-->

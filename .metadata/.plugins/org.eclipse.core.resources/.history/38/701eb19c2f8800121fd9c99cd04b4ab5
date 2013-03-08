@@ -1,0 +1,23 @@
+$(document).ready(function() {
+   	$(".measure").click(function() {
+ 	 window.location.href = "chart.html";
+	});
+ 	$(".share").click(function fb() {
+ 	sleep(1);
+ 	view = document.getElementById("mid").innerHTML;
+ 	 document.getElementById("mid").innerHTML = view+'<img src="button/complete.png" style="width:150%; margin-top:-60%; margin-left:-25% ;" />';
+	});
+	document.ontouch = function() {
+    
+}
+	
+	
+});
+
+function sleep( seconds ) {
+	var timer = new Date();
+	var time = timer.getTime();
+	do
+		timer = new Date();
+	while( (timer.getTime() - time) < (seconds * 1000) );
+}

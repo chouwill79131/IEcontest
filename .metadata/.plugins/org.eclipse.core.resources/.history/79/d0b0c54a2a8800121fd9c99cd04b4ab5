@@ -1,0 +1,11 @@
+$(document).ready(function() {
+   	$(".measure").click(function() {
+ 	 window.location.href = "chart.html";
+	});
+ 	$(".share").click(function() {
+ 	 document.getElementById("mid").sleep(1000).innerHTML='<img src="button/complete.png" style="width:100%; margin-top:41%;" />';
+ 	 sleep(1000);
+ 	 document.getElementById("mid").sleep(1000).innerHTML='<div class="score">85</div>
+			<img class="circle" src="button/circle.png" />';
+	});
+});

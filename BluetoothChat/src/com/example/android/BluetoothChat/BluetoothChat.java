@@ -18,9 +18,12 @@ package com.example.android.BluetoothChat;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +33,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebView;
@@ -56,8 +58,8 @@ public class BluetoothChat extends Activity {
 	public static final String DEVICE_NAME = "device_name";
 	public static final String TOAST = "toast";
 	public int count = 0;
-	public int n = 0; // 計算陣列內有幾個元素
-	public int i = 0; // 取樣計數
+	public int n = 0; // 閮�����扳�撟曉���
+	public int i = 0; // �見閮
 	public int row = 0;
 	public int fine = 0;
 	public int peakcount = 0;
@@ -123,21 +125,35 @@ public class BluetoothChat extends Activity {
 		myWebView.loadUrl("file:///android_asset/main.html");
 		myWebView.addJavascriptInterface(new JavaScriptHandler(this),
 				"MyHandler");
-		// Button btnSet = (Button) this.findViewById(R.id.btnCalc);
-		// btnSet.setOnClickListener(new View.OnClickListener() {
-
-		// Button btnFFT = (Button) this.findViewById(R.id.btnfft);
-		// btnFFT.setOnClickListener(new View.OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// try {
-		// super.wait(2000);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// });
 		
+		
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	// 按下鍵盤上返回按鈕
+	if (keyCode == KeyEvent.KEYCODE_BACK) {
+	new AlertDialog.Builder(this)
+	.setTitle("Message")
+	.setMessage("Sure to exit?")
+	.setNegativeButton("No",
+	new DialogInterface.OnClickListener() {
+	public void onClick(DialogInterface dialog, int which) {
+	// TODO Auto-generated method stub
+	}
+	})
+	 
+
+	.setPositiveButton("Yes",
+	new DialogInterface.OnClickListener() {
+	public void onClick(DialogInterface dialog, int whichButton) {
+	finish();
+	}
+	}).show();
+	return true;
+	} else {
+	return super.onKeyDown(keyCode, event);
+	}
 	}
 
 	// *******************

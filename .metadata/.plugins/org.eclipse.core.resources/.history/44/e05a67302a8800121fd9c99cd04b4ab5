@@ -1,0 +1,8 @@
+$(document).ready(function() {
+   	$(".measure").click(function() {
+ 	 window.location.href = "chart.html";
+	});
+ 	$(".share").click(function() {
+ 	 document.getElementById("mid").innerHTML='<img src="button/complete.png" style="width:100%; margin-top:41%;" />';
+	});
+});

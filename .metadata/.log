@@ -1,0 +1,33 @@
+!SESSION 2013-03-09 00:56:02.217 -----------------------------------------------
+eclipse.buildId=M20110909-1335
+java.version=1.7.0_17
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2013-03-09 00:58:04.102
+!MESSAGE 
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource '/BluetoothChat/res' does not exist.
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:320)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:194)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:266)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:249)
+	at com.android.ide.eclipse.adt.internal.sdk.Sdk$6.run(Sdk.java:1307)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2013-03-09 00:58:04.103
+!MESSAGE Resource '/BluetoothChat/res' does not exist.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2013-03-09 00:58:16.670
+!MESSAGE Unable to update index for central|http://repo1.maven.org/maven2
+!SESSION 2013-03-09 01:16:09.706 -----------------------------------------------
+eclipse.buildId=M20110909-1335
+java.version=1.7.0_17
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2013-03-09 01:17:10.897
+!MESSAGE Unable to update index for central|http://repo1.maven.org/maven2

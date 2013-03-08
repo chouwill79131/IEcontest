@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="complete.css" rel="stylesheet"/>
+    <script src="jquery.js"></script>
+    <script src="highcharts.js"></script>
+    <script src="delay.js"></script>
+    <script src="complete.js"></script>
+  </head>
+  <body>
+    <div id="main" >
+    	<div class="left">
+			<div class="text">
+				<div class="word">Electrocardiagram</div><br />
+				<div class="subword">Measuring</div><br />
+				
+				<div class="hr">HR <span id="hr">81</span></div><br />
+				<div class="date">2013.3.15</div>
+			</div>
+			
+		</div>
+		
+		<div class="mid">
+			<div class="score">85</div>
+			<img class="circle" src="button/circle.png" />
+		</div>	
+		
+		<div class="right">
+			<button class="measure"><img src="button/Measure.png" /></button><br />
+			<button class="share" ><img src="button/Share.png" /></button>
+			<button class="record"><img src="button/Record.png" /></button>
+		</div>
+		
+		
+		
+		
+	</div>
+  </body>
+</html>

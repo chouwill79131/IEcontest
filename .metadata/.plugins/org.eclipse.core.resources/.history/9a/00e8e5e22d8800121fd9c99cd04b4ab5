@@ -1,0 +1,12 @@
+$(document).ready(function() {
+   	$(".measure").click(function() {
+ 	 window.location.href = "chart.html";
+	});
+	var intervalID = window.setInterval(fb, 5000);
+ 	$(".share").click(function fb() {
+ 	view = document.getElementById("mid").innerHTML;
+ 	 document.getElementById("mid").innerHTML = view+'<img src="button/complete.png" style="width:150%; margin-top:-60%; margin-left:-25% ;" />';
+	});
+	
+
+});

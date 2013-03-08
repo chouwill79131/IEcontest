@@ -3,11 +3,11 @@ body { margin:0; padding:0;}
 .left, .mid, .right {float: left; height: 100%; }
 
 
-.left { width: 28%; padding-left:2%;}
+.left {  width: 28%; padding-left:2%;}
 .text, .hr { text-align: center; }
-.text {   color:white;}
-.text img{ width:auto; height:100%;}
-.hr { margin-top: 80%; color:white;}
+.text { margin-top: 20%; color:white; font-family: droidsans ;}
+.hr { border: solid red ; margin-top: 100%; color:white; font-family: "DroidSans" ;}
+.date { border: solid red ; font-family: "droidsans" ; }
 
 .mid { width: 41%; }
 .rhythm, .circle { width: auto; height:70%; margin-left: 4%; }

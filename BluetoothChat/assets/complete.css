@@ -28,7 +28,7 @@ body { margin:0; padding:0;}
 #hr { font-family: droidsans ;}
 
 .mid { width: 41%; }
-.circle { width: auto; height:70%; margin-left: 4%; }
+.circle { width: auto; height:75%; margin-left: 4%; }
 .score { color:white ; z-index: 1; text-align:center; margin-top:41% ; margin-left:-4% ;font-family: DroidSans-Italic ;font-size: 60pt;}
 .circle { margin-left:4% ; margin-top: -65%; z-index: 2; }
 

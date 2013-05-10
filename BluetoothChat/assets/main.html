@@ -4,7 +4,6 @@
     <link href="main.css" rel="stylesheet"/>
     <script src="jquery.js"></script>
     <script src="highcharts.js"></script>
-    <script src="delay.js"></script>
     <script src="main.js"></script>
   </head>
   <body>
@@ -13,27 +12,21 @@
 			<div class="text">
 				<div class="word">Electrocardiagram</div><br />
 				<div class="subword">Measuring</div><br />
-				
-				<div class="hr">HR</div><br />
-				<div class="date">2013.3.15</div>
+				<div class="hr">HR <span id="hr">--</span></div>
+				<div id="date"></div>
 			</div>
-			
 		</div>
-		
 		<div class="mid">
-			<img class="rhythm" src="button/rhythm.png" />
-			<img class="circle" src="button/circle.png" />
+			<div id="rhythm">
+			<img class="circle" src="button/main_rhythm_cut.png" /></div>
 		</div>	
-		
 		<div class="right">
-			<button class="measure"><img src="button/Measure.png" /></button>
-			<button class="share" ><img src="button/Share.png" /></button>
-			<button class="record"><img src="button/Record.png" /></button>
+			<button class="measure" onclick="window.MyHandler.connect()"><img src="button/Measure.png" /></button>
+			<button class="share" onclick="window.MyHandler.postFB()"><img src="button/Share.png" /></button>
+			<button class="record" onclick="window.MyHandler.show_record()"><img src="button/Record.png" /></button>
 		</div>
-		
-		
-		
-		
 	</div>
   </body>
 </html>
+
+

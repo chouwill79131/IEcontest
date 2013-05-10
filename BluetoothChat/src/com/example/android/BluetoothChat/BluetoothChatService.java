@@ -190,10 +190,31 @@ public class BluetoothChatService {
 
     /**
      * Stop all threads
+     * @return 
      */
+    public ConnectThread status(){
+    	return mConnectThread;
+    }
+//    private void resetConnection() {
+//        if (mmInStream != null) {
+//                try {mmInStream.close();} catch (Exception e) {}
+//                mmInStream = null;
+//        }
+//
+//        if (mmOutStream != null) {
+//                try {mmOutStream.close();} catch (Exception e) {}
+//                mmOutStream = null;
+//        }
+//
+//        if (mmSocket != null) {
+//                try {mmSocket.close();} catch (Exception e) {}
+//                mmSocket = null;
+//        }
+//    }
     public synchronized void stop() {
         if (D) Log.d(TAG, "stop");
-
+        
+        System.out.println(mConnectThread);
         if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
@@ -214,6 +235,8 @@ public class BluetoothChatService {
             mInsecureAcceptThread = null;
         }
         setState(STATE_NONE);
+        
+        System.out.println(mConnectThread);
     }
 
     /**
@@ -426,9 +449,9 @@ public class BluetoothChatService {
      * It handles all incoming and outgoing transmissions.
      */
     private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
+        private BluetoothSocket mmSocket;
+        private InputStream mmInStream;
+        private OutputStream mmOutStream;
 
         public ConnectedThread(BluetoothSocket socket, String socketType) {
             Log.d(TAG, "create ConnectedThread: " + socketType);
@@ -453,16 +476,17 @@ public class BluetoothChatService {
         public void run() {
         	//n,i usable
             Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[10240];
             
             int bytes;
             int i =1;
             while (true) {
             	
                 try {
-                	if(i<7){i++;bytes = mmInStream.read(buffer);}else{
+                	if(i<100){i++;bytes = mmInStream.read(buffer);}else{
                 	bytes = mmInStream.read(buffer);
 //                	System.out.println(bytes+","+i);i++;
+                	
                 	mHandler.obtainMessage(BluetoothChat.MESSAGE_READ, bytes, -1, buffer)
                     .sendToTarget();
                 	try {
@@ -470,8 +494,6 @@ public class BluetoothChatService {
     				} catch (InterruptedException e) {
     				}
                 	}
-                	String msg = "";
-                    byte ch;
 //                    System.out.println(bytes+" :bytes");
                     //*****
 //                    while(((byte) mmInStream.read()) !='\n') {
@@ -514,10 +536,12 @@ public class BluetoothChatService {
                 Log.e(TAG, "close() of connect socket failed", e);
             }
         }
+        
+        
     }
 
 	public void finish() {
 		 finish();
-		
 	}
+	
 }
